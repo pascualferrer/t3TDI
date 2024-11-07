@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies Chatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-8 text-center">
+                <h1 class="display-4 mb-3">🎬 Movies Chatbot</h1>
+                <p class="text-muted">Pregunta lo que quieras sobre las películas disponibles</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card shadow-sm mb-4 main-container">
+                    <div class="card-header bg-primary text-white">
+                        <i class='bx bx-movie-play'></i> Películas Disponibles
+                    </div>
+                    <div class="movies-container list-group list-group-flush">
+                        {% for movie in movies %}
+                        <a href="#" class="list-group-item list-group-item-action movie-item" 
+                           onclick="suggestQuestion('{{ movie }}')">
+                            {{ movie }}
+                            <small class="d-block text-muted">Click para sugerir pregunta</small>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-8">
+                <div class="card shadow-sm main-container">
+                    <div class="card-body">
+                        <div id="chat-messages" class="chat-container mb-3">
+                            <div class="chat-message system-message text-center">
+                                <p class="mb-2">👋 ¡Hola! Puedes preguntarme sobre cualquiera de las películas disponibles.</p>
+                                <p class="text-muted small">Por ejemplo: "¿De qué trata Moon?" o "¿Cómo termina Her?"</p>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="user-input" class="form-control" 
+                                   placeholder="Escribe tu pregunta aquí..."
+                                   onkeypress="if(event.keyCode==13)sendMessage()">
+                            <button class="btn btn-primary" onclick="sendMessage()">
+                                <i class='bx bx-send'></i> Enviar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

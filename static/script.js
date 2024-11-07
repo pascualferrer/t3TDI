@@ -1,9 +1,10 @@
 function suggestQuestion(movie) {
     const questions = [
-        `¿De qué trata ${movie}?`,
-        `¿Cómo termina ${movie}?`,
-        `¿Cuáles son los personajes principales de ${movie}?`,
-        `¿Qué sucede en la primera escena de ${movie}?`
+        `What is ${movie} about?`,
+        `How does ${movie} end?`,
+        `Who are the main characters in ${movie}?`,
+        `What happens in the first scene of ${movie}?`,
+        `Describe the plot of ${movie}`
     ];
     const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
     document.getElementById('user-input').value = randomQuestion;
@@ -27,11 +28,11 @@ function sendMessage() {
     spinnerDiv.innerHTML = `
         <div class="d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary me-2" role="status">
-                <span class="visually-hidden">Cargando...</span>
+                <span class="visually-hidden">Loading...</span>
             </div>
             <div>
-                <div class="fw-bold">Generando respuesta...</div>
-                <small class="text-muted">Esto puede tomar varios segundos</small>
+                <div class="fw-bold">Generating response...</div>
+                <small class="text-muted">This might take several seconds</small>
             </div>
         </div>
     `;
@@ -49,7 +50,7 @@ function sendMessage() {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Error en la respuesta del servidor');
+            throw new Error('Server response error');
         }
         return response.json();
     })
@@ -68,7 +69,7 @@ function sendMessage() {
         errorDiv.innerHTML = `
             <div class="system-message text-danger">
                 <i class='bx bx-error-circle'></i> 
-                Error: No se pudo obtener respuesta. Por favor, intenta de nuevo.
+                Error: Could not get response. Please try again.
             </div>
         `;
         chatMessages.appendChild(errorDiv);

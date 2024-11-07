@@ -25,11 +25,11 @@ MOVIES = [
 ]
 
 try:
-    logger.debug("Inicializando RAG Handler...")
+    logger.debug("Initializing RAG Handler...")
     rag_handler = RAGHandler()
-    logger.debug("RAG Handler inicializado correctamente")
+    logger.debug("RAG Handler initialized successfully")
 except Exception as e:
-    logger.error(f"Error al inicializar RAG Handler: {str(e)}")
+    logger.error(f"Error initializing RAG Handler: {str(e)}")
     raise
 
 @app.route('/')
@@ -40,22 +40,22 @@ def home():
 def chat():
     try:
         user_message = request.json.get('message', '')
-        logger.debug(f"Mensaje recibido: {user_message}")
+        logger.debug(f"Message received: {user_message}")
         
-        logger.debug("Procesando mensaje con RAG...")
+        logger.debug("Processing message with RAG...")
         response = rag_handler.query(user_message)
         
         if not response or response.strip() == '':
-            response = "Lo siento, no pude generar una respuesta. Por favor, intenta reformular tu pregunta."
+            response = "Sorry, I couldn’t generate a response. Please try rephrasing your question."
             
-        logger.debug(f"Respuesta generada: {response}")
+        logger.debug(f"Response generated: {response}")
         
         return jsonify({
             'message': response
         })
     except Exception as e:
-        logger.error(f"Error en chat: {str(e)}", exc_info=True)
-        error_message = "Hubo un error procesando tu pregunta. Por favor, intenta de nuevo en unos momentos."
+        logger.error(f"Error in chat: {str(e)}", exc_info=True)
+        error_message = "There was an error processing your question. Please try again in a few moments."
         return jsonify({
             'message': error_message
         }), 500
